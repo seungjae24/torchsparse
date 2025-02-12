@@ -52,9 +52,12 @@ def spdownsample(
                 )
             else:
                 coords_max = _coords.max(0).values
-                coords_max[1:] = (
-                    coords_max[1:] + 2 * padding_t - (kernel_size_t - 1)
-                ) // stride_t
+                coords_max[1:] = torch.div(
+                    coords_max[1:] + 2 * padding_t - (kernel_size_t - 1), stride_t
+                )
+                #coords_max[1:] = (
+                #    coords_max[1:] + 2 * padding_t - (kernel_size_t - 1)
+                #) // stride_t
 
             if torchsparse.tensor.get_allow_negative_coordinates():
                 coords_min = _coords.min(0).values
